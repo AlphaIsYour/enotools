@@ -306,7 +306,7 @@ export default function UnitConverter() {
           </div>
 
           {/* Formula */}
-          <div className="p-3 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700">
+          <div className="p-3 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-800">
             <div className="text-xs font-medium text-surface-500 dark:text-surface-400 mb-1">Formula</div>
             <div className="font-mono text-sm text-surface-700 dark:text-surface-200">{formula}</div>
           </div>
@@ -341,7 +341,7 @@ export default function UnitConverter() {
         {/* Right: Result Display */}
         <div className="flex-1 space-y-4">
           {convertedValue !== null && (
-            <div className="p-6 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-center">
+            <div className="p-6 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-center">
               <div className="text-sm text-blue-600 dark:text-blue-400 mb-2">
                 {parseFloat(inputValue).toLocaleString("en-US")} {fromDef?.name}
               </div>
@@ -353,7 +353,7 @@ export default function UnitConverter() {
           )}
 
           {/* Conversion Table */}
-          <div className="rounded-lg border border-surface-200 dark:border-surface-700 overflow-hidden">
+          <div className="rounded-lg border border-surface-200 dark:border-surface-800 overflow-hidden">
             <div className="bg-surface-50 dark:bg-surface-800 px-4 py-2 text-sm font-medium text-surface-700 dark:text-surface-200">
               {fromDef?.abbr} to other {category.toLowerCase()} units
             </div>

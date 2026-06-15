@@ -147,8 +147,16 @@ export default function CaseConverter() {
   }, [input]);
 
   const handleCopy = async () => {
-    if (output) {
+    if (!output) return;
+    try {
       await navigator.clipboard.writeText(output);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = output;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
     }
   };
 

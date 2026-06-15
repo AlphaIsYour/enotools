@@ -157,7 +157,7 @@ export default function CssBoxShadow() {
           {shadows.map((shadow, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-lg border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 space-y-3"
+              className="p-4 rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-800 space-y-3"
             >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-surface-700 dark:text-surface-200">
@@ -271,11 +271,11 @@ export default function CssBoxShadow() {
         {/* Right: Preview & Output */}
         <div className="flex-1 space-y-4">
           <div
-            className="rounded-xl flex items-center justify-center min-h-[300px] p-8"
+            className="rounded-lg flex items-center justify-center min-h-[300px] p-8"
             style={{ backgroundColor: bgColor }}
           >
             <div
-              className="w-40 h-40 rounded-xl transition-all duration-150"
+              className="w-40 h-40 rounded-lg transition-all duration-150"
               style={{
                 backgroundColor: boxColor,
                 boxShadow: shadows

@@ -17,7 +17,6 @@ export function CopyButton({ text, className = "" }: CopyButtonProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       const ta = document.createElement("textarea");
       ta.value = text;
       document.body.appendChild(ta);
@@ -32,20 +31,20 @@ export function CopyButton({ text, className = "" }: CopyButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
+      className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
         copied
-          ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300"
-          : "bg-surface-100 text-surface-600 hover:bg-surface-200 dark:bg-surface-800 dark:text-surface-300 dark:hover:bg-surface-700"
+          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
+          : "bg-surface-50 text-surface-600 hover:bg-surface-100 dark:bg-surface-800 dark:text-surface-400 dark:hover:bg-surface-700 border border-surface-200 dark:border-surface-700"
       } ${className}`}
     >
       {copied ? (
         <>
-          <Check className="h-3.5 w-3.5" />
-          Copied!
+          <Check className="h-3 w-3" />
+          Copied
         </>
       ) : (
         <>
-          <Copy className="h-3.5 w-3.5" />
+          <Copy className="h-3 w-3" />
           Copy
         </>
       )}

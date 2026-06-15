@@ -225,7 +225,7 @@ export default function JsonFormatter() {
         />
       </div>
 
-      <div className="flex items-center gap-1 border-b border-surface-200 dark:border-surface-700">
+      <div className="flex items-center gap-1 border-b border-surface-200 dark:border-surface-800">
         {tabs.map((t) => (
           <button
             key={t.key}
@@ -241,7 +241,7 @@ export default function JsonFormatter() {
         ))}
       </div>
 
-      <div className="rounded-lg border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-4 min-h-[12rem]">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-4 min-h-[12rem]">
         {!input.trim() ? (
           <p className="text-surface-400 dark:text-surface-500 italic text-sm">
             Enter JSON above to see output...

@@ -1,60 +1,70 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://enotools.dev"),
   title: {
-    default: "EnoTools — All-in-One Developer & Productivity Toolkit",
+    default: "EnoTools — 80+ Free Developer & Productivity Tools",
     template: "%s | EnoTools",
   },
   description:
-    "A modern collection of free, fast, and beautiful online utilities for developers, designers, students, and office workers. QR codes, JSON formatting, regex testing, encoding, and more.",
+    "A modern workspace with 80+ free, fast, browser-based tools for PDF, image, encoding, text, developer, and productivity tasks.",
   keywords: [
-    "developer tools",
-    "online utilities",
-    "QR code generator",
-    "JSON formatter",
-    "regex tester",
-    "base64",
-    "hash generator",
-    "JWT decoder",
-    "CSS generator",
-    "text tools",
-    "free tools",
+    "developer tools", "online utilities", "QR code generator", "JSON formatter",
+    "regex tester", "PDF tools", "image tools", "free tools",
   ],
   authors: [{ name: "EnoTools" }],
   creator: "EnoTools",
+  icons: {
+    icon: [{ url: "/enotools.png", type: "image/png", sizes: "961x961" }],
+    shortcut: "/enotools.png",
+    apple: [{ url: "/enotools.png", type: "image/png", sizes: "961x961" }],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://enotools.dev",
     siteName: "EnoTools",
-    title: "EnoTools — All-in-One Developer & Productivity Toolkit",
-    description:
-      "A modern collection of free, fast, and beautiful online utilities for developers, designers, students, and office workers.",
-    images: [
-      {
-        url: "/og.svg",
-        width: 1200,
-        height: 630,
-        alt: "EnoTools",
-      },
-    ],
+    title: "EnoTools — 80+ Free Developer & Productivity Tools",
+    description: "A modern workspace with 80+ free, fast, browser-based tools.",
+    images: [{ url: "/og.svg", width: 1200, height: 630, alt: "EnoTools" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "EnoTools — All-in-One Developer & Productivity Toolkit",
-    description:
-      "A modern collection of free, fast, and beautiful online utilities.",
+    title: "EnoTools — 80+ Free Developer & Productivity Tools",
+    description: "A modern workspace with 80+ free, fast, browser-based tools.",
     images: ["/og.svg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
+
+const themeScript = `
+  (function() {
+    try {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {
+      document.documentElement.classList.add('dark');
+    }
+  })()
+`;
 
 export default function RootLayout({
   children,
@@ -62,23 +72,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen font-sans antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
+        {children}
       </body>
     </html>
   );

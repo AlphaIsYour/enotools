@@ -77,13 +77,22 @@ export default function SlugGenerator() {
     return [generateSlug(input, options)];
   }, [input, options, batchMode]);
 
-  const handleCopy = async (slug: string) => {
-    await navigator.clipboard.writeText(slug);
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
   };
 
-  const handleCopyAll = async () => {
-    await navigator.clipboard.writeText(slugs.join("\n"));
-  };
+  const handleCopy = (slug: string) => copyToClipboard(slug);
+
+  const handleCopyAll = () => copyToClipboard(slugs.join("\n"));
 
   return (
     <div className="space-y-6">

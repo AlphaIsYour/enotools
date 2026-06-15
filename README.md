@@ -2,14 +2,12 @@
 
 > A modern, all-in-one utility platform for developers, designers, students, and office workers. Free, fast, and privacy-first — everything runs locally in your browser.
 
-![EnoTools](public/og.svg)
-
 ## Features
 
-- **20+ Production-Ready Tools** — QR codes, JSON formatting, regex testing, encoding, hashing, and more
+- **20 Production-Ready Tools** — QR codes, JSON formatting, regex testing, encoding, hashing, and more
 - **Privacy First** — All processing happens client-side; your data never leaves your browser
 - **Dark Mode** — Beautiful dark/light theme with system preference detection
-- **Fast Navigation** — Keyboard-driven search (⌘K), instant tool switching
+- **Fast Navigation** — Keyboard-driven search (⌘K / Ctrl+K), instant tool switching
 - **Responsive Design** — Works perfectly on desktop, tablet, and mobile
 - **SEO Optimized** — Open Graph tags, semantic HTML, structured metadata
 - **No Signup Required** — Use all tools immediately, no accounts or limits
@@ -122,36 +120,18 @@ src/
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-org/enotools)
-
 1. Push your code to GitHub
 2. Import the project in [Vercel](https://vercel.com)
 3. Vercel auto-detects Next.js and deploys with zero configuration
 
 ### Other Platforms
 
+This is a standard Next.js app with static generation. Deploy to any platform that supports Node.js:
+
 ```bash
-# Build static export
 npm run build
-
-# The output is in the `out/` directory
-# Deploy to any static hosting (Netlify, Cloudflare Pages, etc.)
+npm start
 ```
-
-## Screenshots
-
-> Coming soon — screenshots of the homepage, tool pages, and dark mode.
-
-## Roadmap
-
-- [ ] More tools: Markdown to PDF, Color Converter, Lorem Image generator
-- [ ] Tool favorites with local storage persistence
-- [ ] Tool usage history
-- [ ] PWA support for offline usage
-- [ ] Tool sharing with pre-filled parameters
-- [ ] Keyboard shortcuts for all tools
-- [ ] API endpoints for programmatic access
-- [ ] Plugin system for community tools
 
 ## Contributing
 
@@ -176,4 +156,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-Built with ❤️ using Next.js, TypeScript, and Tailwind CSS.
+Built with Next.js, TypeScript, and Tailwind CSS.

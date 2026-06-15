@@ -136,13 +136,13 @@ export default function HtmlEntities() {
   return (
     <div className="space-y-6">
       {/* Options */}
-      <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
               Direction:
             </span>
-            <div className="flex rounded-lg border border-surface-200 dark:border-surface-700 overflow-hidden">
+            <div className="flex rounded-lg border border-surface-200 dark:border-surface-800 overflow-hidden">
               <button
                 onClick={() => setDirection("encode")}
                 className={`px-4 py-2 text-sm font-medium transition-all ${
@@ -171,7 +171,7 @@ export default function HtmlEntities() {
               <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
                 Type:
               </span>
-              <div className="flex rounded-lg border border-surface-200 dark:border-surface-700 overflow-hidden">
+              <div className="flex rounded-lg border border-surface-200 dark:border-surface-800 overflow-hidden">
                 <button
                   onClick={() => setEntityType("named")}
                   className={`px-4 py-2 text-sm font-medium transition-all ${
@@ -208,7 +208,7 @@ export default function HtmlEntities() {
 
       {/* Input / Output */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100">
               Input
@@ -236,7 +236,7 @@ export default function HtmlEntities() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100">
               Output
@@ -265,7 +265,7 @@ export default function HtmlEntities() {
       </div>
 
       {/* Common entities reference */}
-      <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
         <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-3">
           Common HTML Entities
         </h2>

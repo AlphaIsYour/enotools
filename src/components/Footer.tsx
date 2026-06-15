@@ -1,37 +1,35 @@
 import Link from "next/link";
-import { Wrench, Heart } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 
 export function Footer() {
   return (
-    <footer className="border-t border-surface-200 dark:border-surface-800 bg-surface-50 dark:bg-surface-900">
+    <footer className="border-t border-surface-200 dark:border-dashboard-border bg-surface-50/50 dark:bg-dashboard-bg-alt/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white">
-                <Wrench className="h-4 w-4" />
-              </div>
-              <span className="text-lg font-bold">
-                <span className="gradient-text">Eno</span>Tools
+              <BrandLogo size={24} />
+              <span className="text-sm font-semibold text-surface-900 dark:text-dashboard-text-primary">
+                EnoTools
               </span>
             </Link>
-            <p className="text-sm text-surface-500 dark:text-surface-400 max-w-xs">
-              A modern collection of free, fast, and beautiful online utilities
-              for everyone.
+            <p className="text-xs text-surface-400 dark:text-dashboard-text-muted leading-relaxed max-w-xs">
+              Free, fast, browser-based utilities for developers and creators.
+              No signup required.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-4">
-              Quick Links
+            <h3 className="text-[11px] font-semibold text-surface-400 dark:text-dashboard-text-muted uppercase tracking-wider mb-4">
+              Navigate
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/tools"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
+                  className="text-sm text-surface-500 dark:text-dashboard-text-secondary hover:text-surface-900 dark:hover:text-dashboard-text-primary transition-colors"
                 >
                   All Tools
                 </Link>
@@ -39,7 +37,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/categories"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
+                  className="text-sm text-surface-500 dark:text-dashboard-text-secondary hover:text-surface-900 dark:hover:text-dashboard-text-primary transition-colors"
                 >
                   Categories
                 </Link>
@@ -49,94 +47,60 @@ export function Footer() {
 
           {/* Popular Tools */}
           <div>
-            <h3 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-4">
-              Popular Tools
+            <h3 className="text-[11px] font-semibold text-surface-400 dark:text-dashboard-text-muted uppercase tracking-wider mb-4">
+              Popular
             </h3>
             <ul className="space-y-2.5">
-              <li>
-                <Link
-                  href="/tools/qr-code-generator"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  QR Code Generator
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/json-formatter"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  JSON Formatter
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/regex-tester"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  Regex Tester
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/base64"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  Base64 Encoder
-                </Link>
-              </li>
+              {[
+                { href: "/tools/qr-code-generator", label: "QR Code Generator" },
+                { href: "/tools/json-formatter", label: "JSON Formatter" },
+                { href: "/tools/regex-tester", label: "Regex Tester" },
+                { href: "/tools/base64", label: "Base64 Encoder" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-surface-500 dark:text-dashboard-text-secondary hover:text-surface-900 dark:hover:text-dashboard-text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Categories */}
           <div>
-            <h3 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-4">
+            <h3 className="text-[11px] font-semibold text-surface-400 dark:text-dashboard-text-muted uppercase tracking-wider mb-4">
               Categories
             </h3>
             <ul className="space-y-2.5">
-              <li>
-                <Link
-                  href="/category/encoding"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  Encoding & Decoding
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/developer"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  Developer Tools
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/text"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  Text Tools
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/category/css"
-                  className="text-sm text-surface-500 hover:text-brand-600 dark:text-surface-400 dark:hover:text-brand-400 transition-colors"
-                >
-                  CSS Tools
-                </Link>
-              </li>
+              {[
+                { href: "/category/encoding", label: "Encoding" },
+                { href: "/category/developer", label: "Developer" },
+                { href: "/category/text", label: "Text" },
+                { href: "/category/css", label: "CSS" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-surface-500 dark:text-dashboard-text-secondary hover:text-surface-900 dark:hover:text-dashboard-text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 pt-8 border-t border-surface-200 dark:border-surface-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-surface-500 dark:text-surface-400">
-            © {new Date().getFullYear()} EnoTools. All tools run locally in your
-            browser.
+        <div className="mt-10 pt-6 border-t border-surface-200 dark:border-dashboard-border flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-surface-400 dark:text-dashboard-text-muted">
+            &copy; {new Date().getFullYear()} EnoTools. All tools run locally in your browser.
           </p>
-          <p className="text-sm text-surface-500 dark:text-surface-400 flex items-center gap-1">
-            Built with <Heart className="h-3.5 w-3.5 text-red-500 fill-red-500" /> using Next.js
+          <p className="text-xs text-surface-400 dark:text-dashboard-text-muted">
+            Built with{" "}
+            <span className="text-surface-500 dark:text-dashboard-text-secondary">Next.js</span>
           </p>
         </div>
       </div>

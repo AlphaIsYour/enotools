@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { categories, categoryOrder, getToolsByCategory } from "@/lib/tools";
 import type { Metadata } from "next";
 
@@ -9,15 +10,13 @@ export const metadata: Metadata = {
 
 export default function CategoriesPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <h1 className="section-title">Tool Categories</h1>
-        <p className="mt-3 text-surface-500 dark:text-surface-400 max-w-2xl mx-auto">
-          Browse tools organized by purpose. Find exactly what you need.
-        </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--text-main)" }}>Categories</h1>
+        <p className="mt-1 text-sm" style={{ color: "var(--text-muted)" }}>Tools organized by purpose.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {categoryOrder.map((catId) => {
           const cat = categories.find((c) => c.id === catId);
           if (!cat) return null;
@@ -25,20 +24,21 @@ export default function CategoriesPage() {
           if (catTools.length === 0) return null;
 
           return (
-            <Link
-              key={catId}
-              href={`/category/${catId}`}
-              className="group rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6 transition-all hover:border-brand-300 dark:hover:border-brand-600 hover:shadow-lg hover:shadow-brand-500/10 hover:-translate-y-0.5"
-            >
-              <h2 className="text-lg font-bold text-surface-900 dark:text-surface-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-                {cat.name}
-              </h2>
-              <p className="mt-2 text-sm text-surface-500 dark:text-surface-400">
-                {cat.description}
-              </p>
-              <p className="mt-4 text-sm font-medium text-brand-600 dark:text-brand-400">
-                {catTools.length} tool{catTools.length !== 1 ? "s" : ""} →
-              </p>
+            <Link key={catId} href={`/category/${catId}`}
+              className="group p-5 rounded-xl transition-all"
+              style={{ border: "1px solid var(--border-soft)", background: "var(--card-bg)" }}>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="text-sm font-semibold" style={{ color: "var(--text-main)" }}>{cat.name}</h2>
+                  <p className="mt-1.5 text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>{cat.description}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 shrink-0 mt-0.5 transition-transform group-hover:translate-x-0.5" style={{ color: "var(--text-muted)" }} />
+              </div>
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: "var(--border-soft)" }}>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  <span className="font-medium" style={{ color: "var(--text-main)" }}>{catTools.length}</span> tool{catTools.length !== 1 ? "s" : ""}
+                </p>
+              </div>
             </Link>
           );
         })}

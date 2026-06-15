@@ -3,23 +3,22 @@ import { ArrowLeft, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4" style={{ background: "var(--app-bg)" }}>
       <div className="text-center">
-        <p className="text-7xl font-extrabold gradient-text">404</p>
-        <h1 className="mt-4 text-2xl font-bold text-surface-900 dark:text-surface-100">
-          Page not found
-        </h1>
-        <p className="mt-2 text-surface-500 dark:text-surface-400">
+        <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl mb-6"
+          style={{ background: "var(--card-bg)", border: "1px solid var(--border-soft)" }}>
+          <span className="text-3xl font-bold" style={{ color: "var(--text-main)" }}>404</span>
+        </div>
+        <h1 className="text-xl font-semibold" style={{ color: "var(--text-main)" }}>Page not found</h1>
+        <p className="mt-2 text-sm max-w-sm mx-auto" style={{ color: "var(--text-muted)" }}>
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
-          <Link href="/" className="btn-primary">
-            <Home className="h-4 w-4" />
-            Go Home
+          <Link href="/" className="btn-primary text-sm">
+            <Home className="h-3.5 w-3.5" /> Go Home
           </Link>
-          <Link href="/tools" className="btn-secondary">
-            <ArrowLeft className="h-4 w-4" />
-            Browse Tools
+          <Link href="/dashboard" className="btn-secondary text-sm">
+            <ArrowLeft className="h-3.5 w-3.5" /> Dashboard
           </Link>
         </div>
       </div>

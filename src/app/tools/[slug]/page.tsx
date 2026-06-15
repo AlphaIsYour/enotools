@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { tools, getToolBySlug } from "@/lib/tools";
 import { ToolPageWrapper } from "@/components/ToolPageWrapper";
 import { ToolRenderer } from "@/components/ToolRenderer";
+import { UsageTracker } from "@/components/UsageTracker";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -34,7 +35,8 @@ export default async function ToolPage({ params }: PageProps) {
 
   return (
     <ToolPageWrapper tool={tool}>
-      <ToolRenderer slug={tool.slug} />
+      <UsageTracker slug={slug} />
+      <ToolRenderer slug={slug} />
     </ToolPageWrapper>
   );
 }

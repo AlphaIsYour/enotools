@@ -3,6 +3,30 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { marked } from "marked";
 
+function sanitizeHtml(html: string): string {
+  // Remove dangerous tags and their content
+  let result = html.replace(
+    /<(script|style|iframe|object|embed|form|svg)\b[^>]*>[\s\S]*?<\/\1>/gi,
+    ""
+  );
+  // Remove self-closing or unclosed dangerous tags
+  result = result.replace(
+    /<(script|style|iframe|object|embed|form|svg)\b[^>]*\/?>/gi,
+    ""
+  );
+  // Remove event handler attributes (on*)
+  result = result.replace(
+    /\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,
+    ""
+  );
+  // Remove javascript: URLs in href/src/action attributes
+  result = result.replace(
+    /\s(href|src|action)\s*=\s*(?:"javascript:[^"]*"|'javascript:[^']*')/gi,
+    ""
+  );
+  return result;
+}
+
 type ViewMode = "split" | "editor" | "preview";
 
 const TOOLBAR_ITEMS = [
@@ -30,7 +54,8 @@ export default function MarkdownEditor() {
 
   const html = useMemo(() => {
     try {
-      return marked.parse(markdown, { async: false }) as string;
+      const raw = marked.parse(markdown, { async: false }) as string;
+      return sanitizeHtml(raw);
     } catch {
       return "<p>Error parsing markdown</p>";
     }
@@ -84,7 +109,7 @@ ${html}
 </body>
 </html>`;
 
-    const blob = new Blob([fullHtml], { type: "text/html" });
+    const blob = new Blob([fullHtml as unknown as BlobPart], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -94,7 +119,7 @@ ${html}
   };
 
   const handleExportMarkdown = () => {
-    const blob = new Blob([markdown], { type: "text/markdown" });
+    const blob = new Blob([markdown as unknown as BlobPart], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

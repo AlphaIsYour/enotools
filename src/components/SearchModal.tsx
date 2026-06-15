@@ -14,6 +14,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Tool[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -22,16 +23,23 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       setQuery("");
       setResults([]);
       setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 100);
+      setIsSearching(false);
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [open]);
 
   useEffect(() => {
     if (query.length > 0) {
-      setResults(searchTools(query));
-      setSelectedIndex(0);
+      setIsSearching(true);
+      const timer = setTimeout(() => {
+        setResults(searchTools(query));
+        setSelectedIndex(0);
+        setIsSearching(false);
+      }, 300);
+      return () => clearTimeout(timer);
     } else {
       setResults([]);
+      setIsSearching(false);
     }
   }, [query]);
 
@@ -56,14 +64,13 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
   return (
     <div className="fixed inset-0 z-[100] animate-fade-in">
-      <div
-        className="absolute inset-0 bg-surface-900/50 dark:bg-surface-950/80 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div className="relative mx-auto mt-[15vh] max-w-lg px-4">
-        <div className="overflow-hidden rounded-2xl bg-white dark:bg-surface-900 shadow-2xl border border-surface-200 dark:border-surface-700 animate-scale-in">
-          <div className="flex items-center gap-3 border-b border-surface-200 dark:border-surface-700 px-4 py-3">
-            <Search className="h-5 w-5 text-surface-400" />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative mx-auto mt-[12vh] max-w-lg px-4">
+        <div className="overflow-hidden rounded-xl shadow-2xl animate-scale-in"
+          style={{ background: "var(--panel-bg)", border: "1px solid var(--border-soft)" }}>
+          <div className="flex items-center gap-2.5 border-b px-4 py-3"
+            style={{ borderColor: "var(--border-soft)" }}>
+            <Search className="h-4 w-4" style={{ color: "var(--text-muted)" }} />
             <input
               ref={inputRef}
               type="text"
@@ -71,69 +78,80 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-surface-400"
+              className="flex-1 bg-transparent text-sm outline-none"
+              style={{ color: "var(--text-main)" }}
             />
-            <button
-              onClick={onClose}
-              className="rounded-lg p-1 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
-            >
-              <X className="h-4 w-4 text-surface-400" />
+            <button onClick={onClose} className="rounded-md p-1 transition-colors"
+              style={{ color: "var(--text-muted)" }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "var(--hover-bg)"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
+              <X className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          <div className="max-h-80 overflow-y-auto p-2">
+          <div className="max-h-72 overflow-y-auto p-1.5">
             {query.length === 0 && (
-              <p className="px-3 py-8 text-center text-sm text-surface-400">
+              <p className="px-3 py-8 text-center text-xs" style={{ color: "var(--text-muted)" }}>
                 Type to search for tools...
               </p>
             )}
-            {query.length > 0 && results.length === 0 && (
-              <p className="px-3 py-8 text-center text-sm text-surface-400">
+            {isSearching && query.length > 0 && (
+              <div className="space-y-1 p-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center gap-3 px-3 py-2.5 rounded-lg animate-pulse">
+                    <div className="h-4 w-4 rounded" style={{ background: "var(--hover-bg)" }} />
+                    <div className="flex-1 space-y-1.5">
+                      <div className="h-3.5 w-20 rounded" style={{ background: "var(--hover-bg)" }} />
+                      <div className="h-2.5 w-32 rounded" style={{ background: "var(--hover-bg)" }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {!isSearching && query.length > 0 && results.length === 0 && (
+              <p className="px-3 py-8 text-center text-xs" style={{ color: "var(--text-muted)" }}>
                 No tools found for &quot;{query}&quot;
               </p>
             )}
-            {results.map((tool, i) => (
+            {!isSearching && results.map((tool, i) => (
               <button
                 key={tool.slug}
                 onClick={() => handleSelect(tool)}
-                className={`w-full flex items-center justify-between rounded-xl px-3 py-2.5 text-left transition-colors ${
-                  i === selectedIndex
-                    ? "bg-brand-50 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300"
-                    : "hover:bg-surface-50 dark:hover:bg-surface-800"
-                }`}
+                className="w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition-all duration-150"
+                style={{
+                  background: i === selectedIndex ? "var(--active-bg)" : "transparent",
+                  color: "var(--text-main)",
+                }}
+                onMouseEnter={(e) => {
+                  if (i !== selectedIndex) e.currentTarget.style.background = "var(--hover-bg)";
+                }}
+                onMouseLeave={(e) => {
+                  if (i !== selectedIndex) e.currentTarget.style.background = "transparent";
+                }}
               >
                 <div>
                   <p className="text-sm font-medium">{tool.name}</p>
-                  <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">
+                  <p className="text-xs mt-0.5 line-clamp-1" style={{ color: "var(--text-muted)" }}>
                     {tool.description}
                   </p>
                 </div>
-                <ArrowRight
-                  className={`h-4 w-4 ${
-                    i === selectedIndex ? "text-brand-500" : "text-surface-300"
-                  }`}
-                />
+                <ArrowRight className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--text-muted)" }} />
               </button>
             ))}
           </div>
 
-          <div className="border-t border-surface-200 dark:border-surface-700 px-4 py-2.5 flex items-center gap-4 text-[11px] text-surface-400">
+          <div className="border-t px-4 py-2.5 flex items-center gap-4 text-[11px]"
+            style={{ borderColor: "var(--border-soft)", color: "var(--text-muted)" }}>
             <span className="flex items-center gap-1">
-              <kbd className="rounded border border-surface-200 dark:border-surface-600 px-1 py-0.5">
-                ↑↓
-              </kbd>
+              <kbd className="rounded border px-1 py-0.5 text-[10px]" style={{ borderColor: "var(--border-soft)" }}>&uarr;&darr;</kbd>
               navigate
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="rounded border border-surface-200 dark:border-surface-600 px-1 py-0.5">
-                ↵
-              </kbd>
+              <kbd className="rounded border px-1 py-0.5 text-[10px]" style={{ borderColor: "var(--border-soft)" }}>&crarr;</kbd>
               select
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="rounded border border-surface-200 dark:border-surface-600 px-1 py-0.5">
-                esc
-              </kbd>
+              <kbd className="rounded border px-1 py-0.5 text-[10px]" style={{ borderColor: "var(--border-soft)" }}>esc</kbd>
               close
             </span>
           </div>

@@ -211,8 +211,17 @@ export default function ColorPaletteExtractor() {
     [processImage]
   );
 
-  const copyHex = (hex: string) => {
-    navigator.clipboard.writeText(hex);
+  const copyHex = async (hex: string) => {
+    try {
+      await navigator.clipboard.writeText(hex);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = hex;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
     setCopiedHex(hex);
     setTimeout(() => setCopiedHex(null), 1500);
   };
@@ -224,7 +233,7 @@ export default function ColorPaletteExtractor() {
         .map((c, i) => `  --color-${i + 1}: ${c.hex};`)
         .join("\n") +
       "\n}\n";
-    const blob = new Blob([css], { type: "text/css" });
+    const blob = new Blob([css as unknown as BlobPart], { type: "text/css" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -240,7 +249,7 @@ export default function ColorPaletteExtractor() {
         .map((c, i) => `          '${i + 1}': '${c.hex}',`)
         .join("\n") +
       `\n        }\n      }\n    }\n  }\n}\n`;
-    const blob = new Blob([config], { type: "text/javascript" });
+    const blob = new Blob([config as unknown as BlobPart], { type: "text/javascript" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -271,7 +280,7 @@ export default function ColorPaletteExtractor() {
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
+              className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
                 isDragging
                   ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                   : "border-surface-300 dark:border-surface-600 hover:border-surface-400 dark:hover:border-surface-500"
@@ -290,7 +299,7 @@ export default function ColorPaletteExtractor() {
               <img
                 src={image}
                 alt="Uploaded"
-                className="w-full rounded-xl border border-surface-200 dark:border-surface-700 object-contain max-h-80"
+                className="w-full rounded-lg border border-surface-200 dark:border-surface-800 object-contain max-h-80"
               />
               <button
                 onClick={clear}
@@ -366,7 +375,7 @@ export default function ColorPaletteExtractor() {
           {colors.length > 0 ? (
             <>
               {/* Palette Strip */}
-              <div className="flex rounded-xl overflow-hidden h-20 border border-surface-200 dark:border-surface-700">
+              <div className="flex rounded-lg overflow-hidden h-20 border border-surface-200 dark:border-surface-800">
                 {colors.map((c) => (
                   <div
                     key={c.hex}
@@ -389,7 +398,7 @@ export default function ColorPaletteExtractor() {
                 {colors.map((c) => (
                   <div
                     key={c.hex}
-                    className="flex items-center gap-3 p-3 rounded-lg border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 cursor-pointer hover:border-surface-300 dark:hover:border-surface-600 transition-colors"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-800 cursor-pointer hover:border-surface-300 dark:hover:border-surface-600 transition-colors"
                     onClick={() => copyHex(c.hex)}
                   >
                     <div
@@ -428,7 +437,7 @@ export default function ColorPaletteExtractor() {
               </div>
             </>
           ) : (
-            <div className="flex items-center justify-center h-64 text-surface-400 dark:text-surface-500 border border-dashed border-surface-300 dark:border-surface-600 rounded-xl">
+            <div className="flex items-center justify-center h-64 text-surface-400 dark:text-surface-500 border border-dashed border-surface-300 dark:border-surface-600 rounded-lg">
               <p>Upload an image to extract its color palette</p>
             </div>
           )}

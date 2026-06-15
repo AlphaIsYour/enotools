@@ -306,7 +306,7 @@ export default function CssBorderRadius() {
 
         {/* Right: Preview & Output */}
         <div className="flex-1 space-y-4">
-          <div className="flex items-center justify-center min-h-[320px] bg-surface-50 dark:bg-surface-900 rounded-xl p-8">
+          <div className="flex items-center justify-center min-h-[320px] bg-surface-50 dark:bg-surface-900 rounded-lg p-8">
             <div
               ref={previewRef}
               className="relative cursor-pointer select-none"

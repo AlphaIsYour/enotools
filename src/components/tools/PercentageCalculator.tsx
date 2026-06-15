@@ -194,20 +194,20 @@ export default function PercentageCalculator() {
         <div className="flex-1 space-y-4">
           {result ? (
             <>
-              <div className="p-6 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-center">
+              <div className="p-6 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-center">
                 <div className="text-sm text-blue-600 dark:text-blue-400 mb-1">Result</div>
                 <div className="text-3xl font-bold text-blue-800 dark:text-blue-200 font-mono">
                   {result.display}
                 </div>
               </div>
 
-              <div className="p-4 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700">
+              <div className="p-4 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-800">
                 <div className="text-xs font-medium text-surface-500 dark:text-surface-400 mb-1">Formula</div>
                 <div className="font-mono text-sm text-surface-700 dark:text-surface-200">{result.formula}</div>
               </div>
             </>
           ) : (
-            <div className="flex items-center justify-center h-40 text-surface-400 dark:text-surface-500 border border-dashed border-surface-300 dark:border-surface-600 rounded-xl">
+            <div className="flex items-center justify-center h-40 text-surface-400 dark:text-surface-500 border border-dashed border-surface-300 dark:border-surface-600 rounded-lg">
               Enter values to see the result
             </div>
           )}
@@ -230,7 +230,7 @@ export default function PercentageCalculator() {
             {history.map((entry) => (
               <div
                 key={entry.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-sm"
+                className="flex items-center justify-between p-3 rounded-lg bg-surface-50 dark:bg-surface-800 border border-surface-200 dark:border-surface-800 text-sm"
               >
                 <div className="flex-1 min-w-0">
                   <div className="text-surface-500 dark:text-surface-400 text-xs">{getModeLabel(entry.mode)}</div>

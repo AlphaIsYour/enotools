@@ -111,7 +111,7 @@ export default function QrCodeGenerator() {
 
   const downloadSvg = () => {
     if (!svgString) return;
-    const blob = new Blob([svgString], { type: "image/svg+xml" });
+    const blob = new Blob([svgString as unknown as BlobPart], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.download = "qrcode.svg";
@@ -124,7 +124,7 @@ export default function QrCodeGenerator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Controls */}
       <div className="space-y-5">
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6 space-y-5">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6 space-y-5">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">
             Content
           </h2>
@@ -142,7 +142,7 @@ export default function QrCodeGenerator() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6 space-y-5">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6 space-y-5">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">
             Appearance
           </h2>
@@ -156,7 +156,7 @@ export default function QrCodeGenerator() {
                   type="color"
                   value={fgColor}
                   onChange={(e) => setFgColor(e.target.value)}
-                  className="h-10 w-10 rounded-lg cursor-pointer border border-surface-200 dark:border-surface-700"
+                  className="h-10 w-10 rounded-lg cursor-pointer border border-surface-200 dark:border-surface-800"
                 />
                 <input
                   type="text"
@@ -175,7 +175,7 @@ export default function QrCodeGenerator() {
                   type="color"
                   value={bgColor}
                   onChange={(e) => setBgColor(e.target.value)}
-                  className="h-10 w-10 rounded-lg cursor-pointer border border-surface-200 dark:border-surface-700"
+                  className="h-10 w-10 rounded-lg cursor-pointer border border-surface-200 dark:border-surface-800"
                 />
                 <input
                   type="text"
@@ -237,7 +237,7 @@ export default function QrCodeGenerator() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6 space-y-4">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6 space-y-4">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">
             Logo Overlay
           </h2>
@@ -282,11 +282,11 @@ export default function QrCodeGenerator() {
 
       {/* Preview */}
       <div className="space-y-5">
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-4">
             Preview
           </h2>
-          <div className="flex items-center justify-center p-8 rounded-xl bg-surface-50 dark:bg-surface-800 min-h-[300px]">
+          <div className="flex items-center justify-center p-8 rounded-lg bg-surface-50 dark:bg-surface-800 min-h-[300px]">
             {dataUrl ? (
               <img
                 src={dataUrl}
@@ -303,7 +303,7 @@ export default function QrCodeGenerator() {
           <canvas ref={canvasRef} className="hidden" />
         </div>
 
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6 space-y-4">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6 space-y-4">
           <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">
             Export
           </h2>

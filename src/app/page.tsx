@@ -1,184 +1,185 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Zap, Shield, Globe, Sparkles } from "lucide-react";
-import { ToolCard } from "@/components/ToolCard";
 import {
-  tools,
-  categories,
-  categoryOrder,
-  getFeaturedTools,
-  getToolsByCategory,
-} from "@/lib/tools";
+  ArrowRight, Zap, Shield, Sparkles, FileText, Image, Type,
+  Calculator, Code, Palette, Printer, Binary, Shapes,
+  MoreHorizontal, Grid3X3,
+} from "lucide-react";
+import { LandingNavbar } from "@/components/LandingNavbar";
+import { tools, categories, categoryOrder, getFeaturedTools, getToolsByCategory } from "@/lib/tools";
+import { ToolCard } from "@/components/ToolCard";
+import { BrandLogo } from "@/components/BrandLogo";
 
-export default function HomePage() {
+const categoryIcons: Record<string, React.ElementType> = {
+  encoding: Binary, text: Type, developer: Code, math: Calculator,
+  css: Shapes, colour: Palette, images: Image, typography: Type,
+  print: Printer, calculators: Calculator, other: MoreHorizontal, pdf: FileText,
+};
+
+export default function LandingPage() {
   const featured = getFeaturedTools();
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-surface-200 dark:border-surface-800">
-        {/* Background gradient */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-brand-100/60 via-brand-50/30 to-transparent dark:from-brand-950/60 dark:via-brand-950/30 rounded-full blur-3xl" />
-        </div>
+    <div className="min-h-screen" style={{ background: "var(--app-bg)" }}>
+      <LandingNavbar />
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 dark:bg-brand-950/50 border border-brand-200 dark:border-brand-800 px-4 py-1.5 text-sm font-medium text-brand-700 dark:text-brand-300 mb-6">
-              <Sparkles className="h-4 w-4" />
-              {tools.length}+ free tools, no signup required
+            <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-6"
+              style={{ border: "1px solid var(--border-soft)", background: "var(--card-bg)" }}>
+              <Sparkles className="h-3 w-3 text-accent-blue" />
+              <span className="text-xs" style={{ color: "var(--text-muted)" }}>{tools.length} free tools</span>
             </div>
-
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              All the tools you need,
-              <br />
-              <span className="gradient-text">in one place</span>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl" style={{ color: "var(--text-main)" }}>
+              One workspace for{" "}
+              <span style={{ color: "var(--text-muted)" }}>{tools.length}+</span>{" "}
+              powerful tools
             </h1>
-
-            <p className="mt-6 text-lg text-surface-600 dark:text-surface-400 max-w-2xl mx-auto leading-relaxed">
-              A modern collection of free, fast, and beautiful online utilities
-              for developers, designers, students, and office workers. Everything
-              runs locally in your browser — your data never leaves your device.
+            <p className="mt-4 text-lg max-w-xl mx-auto" style={{ color: "var(--text-muted)" }}>
+              PDF, image, converter, generator, and productivity tools — fast, clean, and runs entirely in your browser.
             </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                href="/tools"
-                className="btn-primary text-base px-8 py-3"
-              >
-                Browse All Tools
-                <ArrowRight className="h-5 w-5" />
+            <div className="mt-8 flex items-center justify-center gap-3">
+              <Link href="/dashboard" className="btn-primary">
+                Explore Tools
+                <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                href="/categories"
-                className="btn-secondary text-base px-8 py-3"
-              >
-                View Categories
+              <Link href="/categories" className="btn-secondary">
+                Browse Categories
               </Link>
             </div>
           </div>
 
-          {/* Features strip */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div className="flex items-center gap-3 text-sm text-surface-600 dark:text-surface-400">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">
-                <Zap className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-surface-900 dark:text-surface-100">
-                  Lightning Fast
-                </p>
-                <p className="text-xs">No server roundtrips</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 text-sm text-surface-600 dark:text-surface-400">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
-                <Shield className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-surface-900 dark:text-surface-100">
-                  Privacy First
-                </p>
-                <p className="text-xs">Data stays in your browser</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 text-sm text-surface-600 dark:text-surface-400">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
-                <Globe className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-semibold text-surface-900 dark:text-surface-100">
-                  Free Forever
-                </p>
-                <p className="text-xs">No signup, no limits</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Tools */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="section-title">Featured Tools</h2>
-            <p className="mt-2 text-surface-500 dark:text-surface-400">
-              Most popular utilities used by developers and creators
-            </p>
-          </div>
-          <Link
-            href="/tools"
-            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
-          >
-            View all
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featured.map((tool) => (
-            <ToolCard key={tool.slug} tool={tool} />
-          ))}
-        </div>
-      </section>
-
-      {/* Category Sections */}
-      {categoryOrder.map((catId) => {
-        const cat = categories.find((c) => c.id === catId);
-        const catTools = getToolsByCategory(catId);
-        if (!cat || catTools.length === 0) return null;
-
-        return (
-          <section
-            key={catId}
-            className="border-t border-surface-100 dark:border-surface-800"
-          >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-xl font-bold text-surface-900 dark:text-surface-100">
-                    {cat.name}
-                  </h2>
-                  <p className="mt-1 text-sm text-surface-500 dark:text-surface-400">
-                    {cat.description}
-                  </p>
+          {/* Dashboard preview mockup */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--border-soft)" }}>
+              <div className="p-6 sm:p-8 dark-dotted-panel" style={{ background: "var(--panel-bg)" }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-6 w-6 rounded" style={{ background: "var(--hover-bg)" }} />
+                  <div className="h-4 w-24 rounded" style={{ background: "var(--hover-bg)" }} />
+                  <div className="flex-1" />
+                  <div className="h-6 w-32 rounded" style={{ background: "var(--hover-bg)", border: "1px solid var(--border-soft)" }} />
                 </div>
-                <Link
-                  href={`/category/${catId}`}
-                  className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
-                >
-                  See all
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {catTools.map((tool) => (
-                  <ToolCard key={tool.slug} tool={tool} />
-                ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {featured.slice(0, 6).map((tool) => (
+                    <div key={tool.slug} className="rounded-lg p-4"
+                      style={{ border: "1px solid var(--border-soft)", background: "var(--card-bg)" }}>
+                      <div className="h-8 w-8 rounded-lg mb-3" style={{ background: "var(--hover-bg)" }} />
+                      <div className="h-3 w-20 rounded mb-2" style={{ background: "var(--hover-bg)" }} />
+                      <div className="h-2 w-full rounded" style={{ background: "var(--hover-bg)" }} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </section>
-        );
-      })}
+          </div>
+        </div>
+      </section>
 
-      {/* CTA Section */}
-      <section className="border-t border-surface-200 dark:border-surface-800 bg-gradient-to-b from-brand-50/50 to-transparent dark:from-brand-950/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h2 className="section-title">Ready to be productive?</h2>
-          <p className="mt-4 text-surface-600 dark:text-surface-400 max-w-xl mx-auto">
-            All tools are free, run entirely in your browser, and require no
-            signup. Start using them now.
-          </p>
-          <div className="mt-8">
-            <Link href="/tools" className="btn-primary text-base px-8 py-3">
-              Explore All Tools
-              <ArrowRight className="h-5 w-5" />
+      {/* Features strip */}
+      <section className="border-y" style={{ borderColor: "var(--border-soft)", background: "var(--card-bg)" }}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-xs" style={{ color: "var(--text-muted)" }}>
+            <div className="flex items-center gap-2">
+              <Zap className="h-3.5 w-3.5 text-accent-blue" />
+              <span>Instant results</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Shield className="h-3.5 w-3.5 text-accent-green" />
+              <span>Runs locally in browser</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-3.5 w-3.5 text-accent-cyan" />
+              <span>No signup required</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl font-bold" style={{ color: "var(--text-main)" }}>Tools for every workflow</h2>
+          <p className="mt-2 text-sm" style={{ color: "var(--text-muted)" }}>{categories.length} categories, {tools.length} tools</p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {categoryOrder.map((catId) => {
+            const cat = categories.find((c) => c.id === catId);
+            if (!cat) return null;
+            const catTools = getToolsByCategory(catId);
+            if (catTools.length === 0) return null;
+            const Icon = categoryIcons[catId] || Grid3X3;
+            return (
+              <Link key={catId} href={`/category/${catId}`}
+                className="group p-5 rounded-xl transition-all"
+                style={{ border: "1px solid var(--border-soft)", background: "var(--card-bg-soft)" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(207,207,207,0.18)";
+                  e.currentTarget.style.background = "var(--hover-bg)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border-soft)";
+                  e.currentTarget.style.background = "var(--card-bg-soft)";
+                }}>
+                <Icon className="h-5 w-5 mb-3" style={{ color: "var(--text-muted)" }} />
+                <h3 className="text-sm font-medium" style={{ color: "var(--text-main)" }}>{cat.name}</h3>
+                <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{catTools.length} tools</p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Featured tools */}
+      <section className="border-t" style={{ borderColor: "var(--border-soft)" }}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-xl font-bold" style={{ color: "var(--text-main)" }}>Popular tools</h2>
+              <p className="mt-1 text-sm" style={{ color: "var(--text-muted)" }}>Most used by our community</p>
+            </div>
+            <Link href="/dashboard" className="flex items-center gap-1.5 text-sm transition-colors hover:opacity-80"
+              style={{ color: "var(--text-muted)" }}>
+              View all <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {featured.map((tool) => (
+              <ToolCard key={tool.slug} tool={tool} />
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="border-t" style={{ borderColor: "var(--border-soft)" }}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <h2 className="text-2xl font-bold" style={{ color: "var(--text-main)" }}>Ready to be productive?</h2>
+          <p className="mt-2 text-sm" style={{ color: "var(--text-muted)" }}>All tools are free and run entirely in your browser.</p>
+          <Link href="/dashboard" className="btn-primary mt-6 inline-flex">
+            Open Dashboard <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t" style={{ borderColor: "var(--border-soft)", background: "var(--card-bg)" }}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <BrandLogo size={20} />
+              <span className="text-sm font-medium" style={{ color: "var(--text-main)" }}>EnoTools</span>
+            </div>
+            <div className="flex items-center gap-6 text-xs" style={{ color: "var(--text-muted)" }}>
+              <Link href="/dashboard" className="transition-colors hover:opacity-80">Tools</Link>
+              <Link href="/categories" className="transition-colors hover:opacity-80">Categories</Link>
+              <span>© {new Date().getFullYear()} EnoTools</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

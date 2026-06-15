@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 const TIMEZONES = [
@@ -102,7 +102,7 @@ export default function TimestampConverter() {
 
   const tz = TIMEZONES[timezoneIdx];
 
-  const parsedDate = useCallback((): Date | null => {
+  const parsedDate = useMemo((): Date | null => {
     if (mode === "timestampToDate") {
       const num = Number(timestampInput);
       if (isNaN(num) || timestampInput.trim() === "") return null;
@@ -113,7 +113,7 @@ export default function TimestampConverter() {
       const d = new Date(dateInput);
       return isNaN(d.getTime()) ? null : d;
     }
-  }, [mode, timestampInput, dateInput, unit])();
+  }, [mode, timestampInput, dateInput, unit]);
 
   const formats: FormatRow[] = parsedDate
     ? [
@@ -165,13 +165,6 @@ export default function TimestampConverter() {
       setDateInput(local);
     }
   };
-
-  // Sync bidirectional conversion
-  useEffect(() => {
-    if (mode === "timestampToDate" && parsedDate && dateInput === "") {
-      // Don't auto-fill date input to avoid circular updates
-    }
-  }, [mode, parsedDate, dateInput]);
 
   return (
     <div className="space-y-6">

@@ -54,13 +54,13 @@ export default function UrlEncoderDecoder() {
   return (
     <div className="space-y-6">
       {/* Mode selector */}
-      <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
               Encoding:
             </span>
-            <div className="flex rounded-lg border border-surface-200 dark:border-surface-700 overflow-hidden">
+            <div className="flex rounded-lg border border-surface-200 dark:border-surface-800 overflow-hidden">
               <button
                 onClick={() => setMode("component")}
                 className={`px-4 py-2 text-sm font-medium transition-all ${
@@ -88,7 +88,7 @@ export default function UrlEncoderDecoder() {
             <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
               Direction:
             </span>
-            <div className="flex rounded-lg border border-surface-200 dark:border-surface-700 overflow-hidden">
+            <div className="flex rounded-lg border border-surface-200 dark:border-surface-800 overflow-hidden">
               <button
                 onClick={() => setDirection("encode")}
                 className={`px-4 py-2 text-sm font-medium transition-all ${
@@ -122,7 +122,7 @@ export default function UrlEncoderDecoder() {
 
       {/* Input / Output */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100">
               Input
@@ -150,7 +150,7 @@ export default function UrlEncoderDecoder() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100">
               Output
@@ -179,7 +179,7 @@ export default function UrlEncoderDecoder() {
       </div>
 
       {/* Quick examples */}
-      <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
         <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-3">
           Quick Examples
         </h2>

@@ -138,6 +138,14 @@ function getExpirationStatus(payload: Record<string, unknown>): {
   };
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function syntaxHighlight(json: string): string {
   return json.replace(
     /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
@@ -154,7 +162,7 @@ function syntaxHighlight(json: string): string {
       } else if (/null/.test(match)) {
         cls = "text-surface-400"; // null
       }
-      return `<span class="${cls}">${match}</span>`;
+      return `<span class="${cls}">${escapeHtml(match)}</span>`;
     }
   );
 }
@@ -220,7 +228,7 @@ export default function JwtDecoder() {
   return (
     <div className="space-y-6">
       {/* Input */}
-      <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+      <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100">
             JWT Token
@@ -271,12 +279,12 @@ export default function JwtDecoder() {
       {/* Expiration status */}
       {expStatus && (
         <div
-          className={`rounded-2xl border p-4 flex items-center gap-3 ${
+          className={`rounded-lg border p-4 flex items-center gap-3 ${
             expStatus.status === "expired"
               ? "border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20"
               : expStatus.status === "valid"
               ? "border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20"
-              : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900"
+              : "border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900"
           }`}
         >
           {expStatus.icon}
@@ -299,7 +307,7 @@ export default function JwtDecoder() {
         <>
           {/* Known claims */}
           {knownClaims.length > 0 && (
-            <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+            <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
               <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-4">
                 Key Claims
               </h2>
@@ -307,7 +315,7 @@ export default function JwtDecoder() {
                 {knownClaims.map((claim) => (
                   <div
                     key={claim.key}
-                    className="rounded-xl bg-surface-50 dark:bg-surface-800 p-3"
+                    className="rounded-md bg-surface-50 dark:bg-surface-800 p-3"
                   >
                     <div className="flex items-center gap-2 mb-1">
                       {claim.key === "sub" ? (
@@ -342,7 +350,7 @@ export default function JwtDecoder() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Header - Blue */}
-            <div className="rounded-2xl border border-blue-200 dark:border-blue-800 bg-white dark:bg-surface-900 p-6">
+            <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-white dark:bg-surface-900 p-6">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500" />
@@ -352,7 +360,7 @@ export default function JwtDecoder() {
                 </div>
                 <CopyButton text={headerJson} />
               </div>
-              <div className="rounded-xl bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
+              <div className="rounded-lg bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
                 <pre
                   className="text-xs font-mono whitespace-pre-wrap break-all"
                   dangerouslySetInnerHTML={{ __html: headerHighlighted }}
@@ -369,7 +377,7 @@ export default function JwtDecoder() {
             </div>
 
             {/* Payload - Green */}
-            <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-surface-900 p-6">
+            <div className="rounded-lg border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-surface-900 p-6">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -379,7 +387,7 @@ export default function JwtDecoder() {
                 </div>
                 <CopyButton text={payloadJson} />
               </div>
-              <div className="rounded-xl bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
+              <div className="rounded-lg bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
                 <pre
                   className="text-xs font-mono whitespace-pre-wrap break-all"
                   dangerouslySetInnerHTML={{ __html: payloadHighlighted }}
@@ -396,7 +404,7 @@ export default function JwtDecoder() {
             </div>
 
             {/* Signature - Red */}
-            <div className="rounded-2xl border border-red-200 dark:border-red-800 bg-white dark:bg-surface-900 p-6">
+            <div className="rounded-lg border border-red-200 dark:border-red-800 bg-white dark:bg-surface-900 p-6">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500" />
@@ -406,7 +414,7 @@ export default function JwtDecoder() {
                 </div>
                 <CopyButton text={parts.signature} />
               </div>
-              <div className="rounded-xl bg-surface-50 dark:bg-surface-800 p-4">
+              <div className="rounded-lg bg-surface-50 dark:bg-surface-800 p-4">
                 <p className="text-xs font-mono text-surface-600 dark:text-surface-300 break-all">
                   {parts.signature}
                 </p>
@@ -421,11 +429,11 @@ export default function JwtDecoder() {
           </div>
 
           {/* Full token breakdown */}
-          <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 p-6">
+          <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-6">
             <h2 className="text-sm font-semibold text-surface-900 dark:text-surface-100 mb-3">
               Token Breakdown
             </h2>
-            <div className="rounded-xl bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
+            <div className="rounded-lg bg-surface-50 dark:bg-surface-800 p-4 overflow-x-auto">
               <p className="text-xs font-mono break-all leading-relaxed">
                 <span className="text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1 rounded">
                   {parts.headerRaw}

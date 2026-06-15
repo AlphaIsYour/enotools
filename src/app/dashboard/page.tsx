@@ -138,7 +138,7 @@ export default function DashboardPage() {
               className="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white ring-2"
               style={{
                 background: user.color,
-                ringColor: "var(--panel-bg)",
+                boxShadow: "0 0 0 2px var(--panel-bg)",
                 zIndex: dummyUsers.length - i,
               }}
             >
@@ -150,7 +150,7 @@ export default function DashboardPage() {
             style={{
               background: "var(--card-bg)",
               color: "var(--text-muted)",
-              ringColor: "var(--panel-bg)",
+              boxShadow: "0 0 0 2px var(--panel-bg)",
             }}
           >
             +2k

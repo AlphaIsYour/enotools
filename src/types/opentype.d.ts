@@ -54,8 +54,9 @@ declare module "opentype.js" {
   function parse(buffer: ArrayBuffer): Font;
   function load(url: string, callback?: (err: Error | null, font?: Font) => void): Promise<Font>;
 
-  export default {
-    parse,
-    load,
-  };
+  export { load, parse };
+}
+
+declare module "opentype.js/dist/opentype.mjs" {
+  export * from "opentype.js";
 }

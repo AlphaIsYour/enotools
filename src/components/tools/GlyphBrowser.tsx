@@ -2,7 +2,7 @@
 
 import { useState, useRef, useMemo } from "react";
 import { CopyButton } from "@/components/CopyButton";
-import opentype from "opentype.js";
+import { parse as parseFont } from "opentype.js/dist/opentype.mjs";
 
 interface GlyphInfo {
   index: number;
@@ -39,7 +39,7 @@ export default function GlyphBrowser() {
     reader.onload = (ev) => {
       try {
         const buffer = ev.target?.result as ArrayBuffer;
-        const font = opentype.parse(buffer);
+        const font = parseFont(buffer);
 
         // Load font for rendering
         fontIdRef.current += 1;

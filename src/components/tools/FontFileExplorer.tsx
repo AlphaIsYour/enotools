@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import opentype from "opentype.js";
+import { parse as parseFont } from "opentype.js/dist/opentype.mjs";
 
 interface FontInfo {
   family: string;
@@ -43,7 +43,7 @@ export default function FontFileExplorer() {
     reader.onload = (ev) => {
       try {
         const buffer = ev.target?.result as ArrayBuffer;
-        const font = opentype.parse(buffer);
+        const font = parseFont(buffer);
 
         const names = font.names;
         const family =

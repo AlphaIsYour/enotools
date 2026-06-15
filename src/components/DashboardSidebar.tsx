@@ -25,7 +25,7 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
   const pathname = usePathname();
   const [recentSlugs, setRecentSlugs] = useState<string[]>([]);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [tooltip, setTooltip] = useState<{ label: string; top: number } | null>(null);
 
   useEffect(() => {
     if (hasUsageData()) setRecentSlugs(getTopSlugs(5));
@@ -35,6 +35,14 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
     if (href === "/dashboard") return pathname === "/dashboard";
     return pathname.startsWith(href);
   };
+
+  const showTooltip = (label: string, target: HTMLElement) => {
+    if (!collapsed) return;
+    const rect = target.getBoundingClientRect();
+    setTooltip({ label, top: rect.top + rect.height / 2 });
+  };
+
+  const hideTooltip = () => setTooltip(null);
 
   const navItems = [
     { href: "/", label: "Home", icon: Home },
@@ -49,7 +57,7 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
 
   return (
     <aside
-      className="h-screen shrink-0 overflow-hidden transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+      className="relative z-50 h-screen shrink-0 overflow-hidden transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
       style={{ width: collapsed ? 64 : 240, background: "var(--sidebar-bg)" }}
     >
       <div className="flex flex-col h-full">
@@ -84,11 +92,11 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                   }}
                   onMouseEnter={(e) => {
                     if (!active) e.currentTarget.style.background = "var(--hover-bg)";
-                    setHoveredItem(item.label);
+                    showTooltip(item.label, e.currentTarget);
                   }}
                   onMouseLeave={(e) => {
                     if (!active) e.currentTarget.style.background = "transparent";
-                    setHoveredItem(null);
+                    hideTooltip();
                   }}
                 >
                   <item.icon className={`${iconSize} shrink-0`} />
@@ -97,12 +105,6 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                   }`}>
                     {item.label}
                   </span>
-                  {collapsed && hoveredItem === item.label && (
-                    <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-lg text-xs whitespace-nowrap z-[999]"
-                      style={{ background: "var(--card-bg)", color: "var(--text-main)", border: "1px solid var(--border-soft)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                      {item.label}
-                    </div>
-                  )}
                 </Link>
               );
             })}
@@ -133,11 +135,11 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                       }}
                       onMouseEnter={(e) => {
                         if (!active) e.currentTarget.style.background = "var(--hover-bg)";
-                        setHoveredItem(name);
+                        showTooltip(name, e.currentTarget);
                       }}
                       onMouseLeave={(e) => {
                         if (!active) e.currentTarget.style.background = "transparent";
-                        setHoveredItem(null);
+                        hideTooltip();
                       }}
                     >
                       <Clock className={`${iconSize} shrink-0`} />
@@ -146,12 +148,6 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                       }`}>
                         {name}
                       </span>
-                      {collapsed && hoveredItem === name && (
-                        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-lg text-xs whitespace-nowrap z-[999]"
-                          style={{ background: "var(--card-bg)", color: "var(--text-main)", border: "1px solid var(--border-soft)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                          {name}
-                        </div>
-                      )}
                     </Link>
                   );
                 })}
@@ -183,11 +179,11 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                     }}
                     onMouseEnter={(e) => {
                       if (!active) e.currentTarget.style.background = "var(--hover-bg)";
-                      setHoveredItem(cat.name);
+                      showTooltip(cat.name, e.currentTarget);
                     }}
                     onMouseLeave={(e) => {
                       if (!active) e.currentTarget.style.background = "transparent";
-                      setHoveredItem(null);
+                      hideTooltip();
                     }}
                   >
                     <Icon className={`${iconSize} shrink-0`} />
@@ -196,12 +192,6 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
                     }`}>
                       {cat.name}
                     </span>
-                    {collapsed && hoveredItem === cat.name && (
-                      <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-lg text-xs whitespace-nowrap z-[999]"
-                        style={{ background: "var(--card-bg)", color: "var(--text-main)", border: "1px solid var(--border-soft)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                        {cat.name}
-                      </div>
-                    )}
                   </Link>
                 );
               })}
@@ -219,11 +209,11 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "var(--hover-bg)";
-              setHoveredItem("Settings");
+              showTooltip("Settings", e.currentTarget);
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
-              setHoveredItem(null);
+              hideTooltip();
             }}
           >
             <Settings className={`${iconSize} shrink-0`} />
@@ -232,15 +222,24 @@ export function DashboardSidebar({ collapsed }: DashboardSidebarProps) {
             }`}>
               Settings
             </span>
-            {collapsed && hoveredItem === "Settings" && (
-              <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2 py-1 rounded-lg text-xs whitespace-nowrap z-[999]"
-                style={{ background: "var(--card-bg)", color: "var(--text-main)", border: "1px solid var(--border-soft)", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-                Settings
-              </div>
-            )}
           </Link>
         </div>
       </div>
+
+      {collapsed && tooltip && (
+        <div
+          className="fixed left-[76px] z-[9999] -translate-y-1/2 rounded-lg px-2 py-1 text-xs whitespace-nowrap pointer-events-none"
+          style={{
+            top: tooltip.top,
+            background: "var(--card-bg)",
+            color: "var(--text-main)",
+            border: "1px solid var(--border-soft)",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          }}
+        >
+          {tooltip.label}
+        </div>
+      )}
     </aside>
   );
 }

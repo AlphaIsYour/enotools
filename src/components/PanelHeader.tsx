@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PanelLeftClose, PanelLeftOpen, Search, Sun, Moon, Github } from "lucide-react";
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
+  Search,
+  Sun,
+  Moon,
+  Github,
+} from "lucide-react";
 import { SearchModal } from "./SearchModal";
 
 interface PanelHeaderProps {
@@ -9,7 +16,10 @@ interface PanelHeaderProps {
   onToggleSidebar: () => void;
 }
 
-export function PanelHeader({ sidebarCollapsed, onToggleSidebar }: PanelHeaderProps) {
+export function PanelHeader({
+  sidebarCollapsed,
+  onToggleSidebar,
+}: PanelHeaderProps) {
   const [dark, setDark] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
@@ -65,7 +75,11 @@ export function PanelHeader({ sidebarCollapsed, onToggleSidebar }: PanelHeaderPr
             }}
             title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            {sidebarCollapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
+            {sidebarCollapsed ? (
+              <PanelLeftOpen className="h-4 w-4" />
+            ) : (
+              <PanelLeftClose className="h-4 w-4" />
+            )}
           </button>
 
           {/* Search bar */}
@@ -84,13 +98,22 @@ export function PanelHeader({ sidebarCollapsed, onToggleSidebar }: PanelHeaderPr
               e.currentTarget.style.borderColor = "var(--border-soft)";
             }}
           >
-            <Search className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--text-muted)" }} />
-            <span className="flex-1 text-[13px] text-left" style={{ color: "var(--text-muted)" }}>
+            <Search
+              className="h-3.5 w-3.5 shrink-0"
+              style={{ color: "var(--text-muted)" }}
+            />
+            <span
+              className="flex-1 text-[13px] text-left"
+              style={{ color: "var(--text-muted)" }}
+            >
               Search tools...
             </span>
             <kbd
               className="rounded border px-1 py-0.5 text-[10px] font-medium"
-              style={{ borderColor: "var(--border-soft)", color: "var(--text-muted)" }}
+              style={{
+                borderColor: "var(--border-soft)",
+                color: "var(--text-muted)",
+              }}
             >
               {isMac ? "⌘K" : "Ctrl+K"}
             </kbd>
@@ -100,7 +123,7 @@ export function PanelHeader({ sidebarCollapsed, onToggleSidebar }: PanelHeaderPr
         {/* Right: GitHub + theme toggle */}
         <div className="flex items-center gap-2">
           <a
-            href="https://github.com"
+            href="https://github.com/AlphaIsYour/enotools"
             target="_blank"
             rel="noopener noreferrer"
             className={iconBtnClass}

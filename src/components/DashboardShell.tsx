@@ -1,14 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { PanelHeader } from "@/components/PanelHeader";
 
+const SIDEBAR_COLLAPSED_KEY = "enotools-sidebar-collapsed";
+let cachedSidebarCollapsed = false;
+
 export function DashboardShell({ children }: { children: React.ReactNode }) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(cachedSidebarCollapsed);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === "true";
+    cachedSidebarCollapsed = stored;
+    setSidebarCollapsed(stored);
+    setHydrated(true);
+  }, []);
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed((current) => {
+      const next = !current;
+      cachedSidebarCollapsed = next;
+      localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(next));
+      return next;
+    });
+  };
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: "var(--sidebar-bg)" }}>
+    <div
+      className="flex h-screen overflow-hidden"
+      style={{
+        background: "var(--sidebar-bg)",
+        visibility: hydrated ? "visible" : "hidden",
+      }}
+    >
       {/* Sidebar — plain, merges with background */}
       <DashboardSidebar collapsed={sidebarCollapsed} />
 
@@ -24,7 +50,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           {/* Panel header — solid, blocks content behind */}
           <PanelHeader
             sidebarCollapsed={sidebarCollapsed}
-            onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+            onToggleSidebar={toggleSidebar}
           />
 
           {/* Scrollable content with dotted background */}
